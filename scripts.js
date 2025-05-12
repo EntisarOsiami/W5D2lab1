@@ -6,24 +6,24 @@ submitButton.addEventListener("click", () => {
     let postBody = document.getElementById("message");
     let image1 = document.getElementById("image");
 
-    
-       let username = postname.value;
-      let  textarea = postBody.value;
-       let img = image1.value;
-    
 
-    console.log(typeof(username));
-    
+    let name = postname.value;
+    let body = postBody.value;
+    let img1 = image1.value;
 
-    if (username.length < 4) {
+
+    console.log(typeof (name)); // string, so I can use length to get the character count
+
+
+    if (name.length < 4) {
         alert("Please add a username with at least 4 characters");
         return;
     }
-    if (textarea.length < 6) {
+    if (body.length < 6) {
         alert("Please enter your message");
         return;
     }
-    if (img === "") {
+    if (img1 === "") {
         alert("Please enter your image URL");
         return;
     }
@@ -32,9 +32,9 @@ submitButton.addEventListener("click", () => {
     fetch("https://68219a12259dad2655afc1e1.mockapi.io/api/post", {
         method: "POST",
         body: JSON.stringify({
-            name: username,
-            body: textarea,
-            img: img,
+            username: name,
+            textarea: body,
+            img: img1,
         }),
         headers: {
             "Content-Type": "application/json",
