@@ -6,14 +6,11 @@ submitButton.addEventListener("click", () => {
     let postBody = document.getElementById("message");
     let image1 = document.getElementById("image");
 
-
     let name = postname.value;
     let body = postBody.value;
     let img1 = image1.value;
 
-
-    console.log(typeof (name)); // string, so I can use length to get the character count
-
+    console.log(typeof name); // string, so I can use length to get the character count
 
     if (name.length < 4) {
         alert("Please add a username with at least 4 characters");
@@ -28,24 +25,32 @@ submitButton.addEventListener("click", () => {
         return;
     }
 
-
-    fetch("https://68219a12259dad2655afc1e1.mockapi.io/api/post", {
-        method: "POST",
-        body: JSON.stringify({
-            username: name,
-            textarea: body,
-            img: img1,
-        }),
-        headers: {
-            "Content-Type": "application/json",
-        },
-    }).then(() => {
-        postname.value = "";
-        postBody.value = "";
-        image1.value = "";
-    });
-});
-
+    fetch("https://68219a12259dad2655afc1e1.mockapi.io/api/post")
+        .then((response) => response.json())
+        .then((data) => {
+            let isUsername = data.some((item) => item.username === name);
+            if (isUsername) {
+                alert("This username already exists");
+                return;
+            }
+            else fetch("https://68219a12259dad2655afc1e1.mockapi.io/api/post", {
+                method: "POST",
+                body: JSON.stringify({
+                    username: name,
+                    textarea: body,
+                    img: img1,
+                }),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+        })
+        .then(() => {
+            postname.value = "";
+            postBody.value = "";
+            image1.value = "";
+        });
+})
 
 PostFun = () => {
     fetch(`https://68219a12259dad2655afc1e1.mockapi.io/api/post`)
