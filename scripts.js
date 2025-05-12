@@ -36,8 +36,8 @@ submitButton.addEventListener("click", () => {
             else fetch("https://68219a12259dad2655afc1e1.mockapi.io/api/post", {
                 method: "POST",
                 body: JSON.stringify({
-                    username: name,
-                    textarea: body,
+                    name: name,
+                    body: body,
                     img: img1,
                 }),
                 headers: {
