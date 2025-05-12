@@ -12,7 +12,7 @@ submitButton.addEventListener("click", () => {
     body: JSON.stringify({
       name: postname.value,
       body: postBody.value,
-      img: image1,
+      img: image1.value,
     }),
     headers: {
       "Content-Type": "application/json",
@@ -20,7 +20,7 @@ submitButton.addEventListener("click", () => {
   }).then(()=>{
     postname.value = "";
     postBody.value = "";
-    image1.value ="";
+    image1.value = "";
 
   });
 });
