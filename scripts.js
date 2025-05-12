@@ -1,0 +1,76 @@
+let submitButton = document.getElementById("btn");
+let postContainer = document.getElementById("container");
+
+submitButton.addEventListener("click", () => {
+  let postname = document.getElementById("username");
+  let postBody = document.getElementById("message");
+  let image1 = document.getElementById("image");
+
+
+  fetch("https://68219a12259dad2655afc1e1.mockapi.io/api/post", {
+    method: "POST",
+    body: JSON.stringify({
+      name: postname.value,
+      body: postBody.value,
+      img: image1,
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }).then(()=>{
+    postname.value = "";
+    postBody.value = "";
+    image1.value ="";
+
+  });
+});
+
+PostFun = () => {
+  fetch(`https://68219a12259dad2655afc1e1.mockapi.io/api/post`)
+    .then((response) => response.json())
+    .then((data) => {
+      data.forEach((item) => {
+        let post = document.createElement("div");
+        post.className = "card";
+        let postId = document.createElement("p");
+        postId.innerText = `ID : ${item.id}`;
+        let postName = document.createElement("h4");
+        postName.innerText = `username : ${item.name}`;
+        let postBody = document.createElement("p");
+        postBody.innerText = `Post : ${item.body}`;
+        let postImg = document.createElement("img");
+        postImg.className = "post-img";
+        if (item.img) {
+          postImg.src = item.img;
+        } else {
+          postImg.src =
+            "https://images.unsplash.com/photo-1428908728789-d2de25dbd4e2?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8c2t5fGVufDB8fDB8fHww";
+        }
+
+        let deleteButton = document.createElement("button");
+        deleteButton.innerText = "Delete";
+        deleteButton.className = "delete-button";
+
+        post.appendChild(postImg);
+        post.appendChild(postName);
+        post.appendChild(postBody);
+        post.appendChild(postId);
+        post.appendChild(deleteButton);
+
+        deleteButton.addEventListener("click", () => {
+          fetch(
+            `https://68219a12259dad2655afc1e1.mockapi.io/api/post/${item.id}`,
+            {
+              method: "DELETE",
+            }
+          ).then(() => {
+            postContainer.removeChild(post);
+          });
+        });
+
+        postContainer.appendChild(post);
+      });
+    });
+};
+
+PostFun();
