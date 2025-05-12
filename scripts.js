@@ -5,12 +5,36 @@ submitButton.addEventListener("click", () => {
     let postname = document.getElementById("username");
     let postBody = document.getElementById("message");
     let image1 = document.getElementById("image");
+
+    
+       let username = postname.value;
+      let  textarea = postBody.value;
+       let img = image1.value;
+    
+
+    console.log(typeof(username));
+    
+
+    if (username.length < 4) {
+        alert("Please add a username with at least 4 characters");
+        return;
+    }
+    if (textarea.length < 6) {
+        alert("Please enter your message");
+        return;
+    }
+    if (img === "") {
+        alert("Please enter your image URL");
+        return;
+    }
+
+
     fetch("https://68219a12259dad2655afc1e1.mockapi.io/api/post", {
         method: "POST",
         body: JSON.stringify({
-            name: postname.value,
-            body: postBody.value,
-            img: image1.value,
+            name: username,
+            body: textarea,
+            img: img,
         }),
         headers: {
             "Content-Type": "application/json",
